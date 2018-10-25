@@ -1,0 +1,121 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block content %}
+
+          <!-- END - Breadcrumbs -->
+                 
+          <div class="row">
+              <div class="col-sm-12">
+                <div class="element-wrapper">
+                  <div class="element-box">
+
+
+                    <form id="formValidate" action="/add_leader"  method= "POST" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <h5 class="form-header">
+                        Add Leader Form
+                      </h5>
+                      <div class="form-desc">
+                        Validation of the form is made possible using powerful validator plugin for bootstrap. <a href="http://1000hz.github.io/bootstrap-validator/" target="_blank">Learn more about Bootstrap Validator</a>
+                      </div>
+                      <fieldset class="form-group">
+                        <legend><span>Biodata Section</span></legend>
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for="id_username"> UserName</label><input name="username" id="username" class="form-control" data-error="Please input your First Name" placeholder="First Name" required="required" type="text">
+                              <div class="help-block form-text with-errors form-control-feedback"></div>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for="id_email">Email</label><input name = "email" id="email" class="form-control" data-error="Please input your Last Name" placeholder="Last Name" required="required" type="text">
+                              <div class="help-block form-text with-errors form-control-feedback"></div>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for="id_first_name"> First Name</label><input name="first_name" id="first_name" class="form-control" data-error="Please input your First Name" placeholder="First Name" required="required" type="text">
+                              <div class="help-block form-text with-errors form-control-feedback"></div>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for="id_last_name">Last Name</label><input name = "last_name" id="last_name" class="form-control" data-error="Please input your Last Name" placeholder="Last Name" required="required" type="text">
+                              <div class="help-block form-text with-errors form-control-feedback"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for="id_dob"> Date of Birth</label><input name = "dob" id="id_dob" class="single-daterange form-control" placeholder="Date of birth" type="text" data-date-format="YYYY-MMMM-DD">
+                            </div>
+                          </div>
+                         
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for="id_phone"> Phone</label><input name = "phone" id="id_phone" class=" form-control" placeholder="Phone Number" required="required" type="phone" >
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for="">Cell member of  </label><input name = "cell_name" id="cell_name" class=" form-control" placeholder="Cell name" type="Text" >
+                            </div>
+                          </div>
+
+                          <div class="col-sm-6">
+                            
+                            <div class="form-group">
+                              <label for="">Address </label><input name = "address" id="address" class="form-control" placeholder="Address" type="text" value="">
+                            </div>
+                          </div>
+                          
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for=""> Password</label><input name = "password" id="password" class="form-control" data-minlength="6" placeholder="Password" required="required" type="password">
+                              <div class="help-block form-text text-muted form-control-feedback">
+                                Minimum of 6 characters
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for="">Confirm Password</label><input name = "password" id="password" class="form-control" data-match-error="Passwords don&#39;t match" placeholder="Confirm Password" required="required" type="password">
+                              <div class="help-block form-text with-errors form-control-feedback"></div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        
+                      </fieldset>
+                     
+                      <div class="form-check">
+                        <label class="form-check-label"><input name = "is_superuser" id="is_superuser" class="form-check-input" type="checkbox">Create as admin user</label>
+                      </div>
+                      <div class="form-buttons-w">
+                        <button class="btn btn-primary" type="submit"> Submit</button>
+                      </div> 
+                      {% if error %}
+                      <div class="row">
+                        <hr>
+                        <br>
+                        <div class=" col-sm-6 alert alert-danger" role="alert">
+                        <strong>Oh snap! </strong> Cell Leader with that Username exists
+                      </div>
+                      </div>
+                      {% endif %}
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          <!--------------------
+          START - Color Scheme Toggler
+          -------------------->
+
+{% endblock  %}

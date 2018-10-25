@@ -1,0 +1,214 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block content %}
+
+          <!-- END - Breadcrumbs -->
+                 
+          <div class="row">
+              <div class="col-sm-12">
+                <div class="element-wrapper">
+                  <div class="element-box">
+
+
+                    <form id="edit_form" action="#"  method= "POST" enctype="multipart/form-data">
+                      <span id = "csrf"></span>
+                      {% csrf_token %}
+                      <h5 class="form-header">
+                        Tenant data page
+                      </h5>
+                      <div class="form-desc">
+                        You are currently viewing <span><h6>{{tenant_user.last_name}} {{tenant_user.first_name}}</h6></span>
+                      </div>
+                      <input type="hidden" name="user_id" value="{{tenant.id}}">
+                      <fieldset class="form-group">
+                        <legend><span>Biodata Section</span></legend>
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for="id_username"> UserName</label><input required type="text" value="{{tenant_user.username}}" name="username" id="username" class="form-control" data-error="Please input your userName" placeholder="First Name" required="required" type="text">
+                              <div class="help-block form-text with-errors form-control-feedback"></div>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for="id_email">Email</label><input type="text" required value="{{tenant_user.email}}" name = "email" id="email" class="form-control" data-error="Please input your Last Name" placeholder="Last Name" required="required" type="text">
+                              <div class="help-block form-text with-errors form-control-feedback"></div>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for="id_first_name"> First Name</label><input required value="{{tenant.fname}}" name="first_name" id="first_name" class="form-control" data-error="Please input your First Name" placeholder="First Name" required="required" type="text">
+                              <div class="help-block form-text with-errors form-control-feedback"></div>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for="id_last_name">Last Name</label><input required value="{{tenant.lname}}" name = "last_name" id="last_name" class="form-control" data-error="Please input your Last Name" placeholder="Last Name" required="required" type="text">
+                              <div class="help-block form-text with-errors form-control-feedback"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                         
+                         
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for="id_phone"> Phone</label><input required type="number" value="{{tenant.phone}}" name = "phone" id="id_phone" class=" form-control" placeholder="Phone Number" required="required" type="phone" >
+                            </div>
+                          </div>
+
+
+                          <div class="col-sm-6">
+                            
+                            <div class="form-group">
+                              <label for="">Address </label><input required value="{{tenant.address}}" name = "address" id="address" class="form-control" placeholder="Address" type="text" value="">
+                            </div>
+                          </div>
+                          
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-6">
+                              <div class="form-group">
+                                  <label for=""> Lives In</label>
+                                  <select id="lives_in" class="form-control">
+                                    <option value="flat">
+                                      Select type of apartment
+                                    </option>
+                                    <option value="bq">
+                                      BQ
+                                    </option>
+                                    <option value="flat">
+                                      FLAT
+                                    </option>
+                                   </select>
+                                </div>
+                          </div>
+                        </div>
+                        <!-- <div class="row">
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for=""> Password</label><input required name = "password" id="password" class="form-control" data-minlength="6" placeholder="Password" required="required" type="password">
+                              <div class="help-block form-text text-muted form-control-feedback">
+                                Minimum of 6 characters
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for="">Confirm Password</label><input name = "password" id="password" class="form-control" data-match-error="Passwords don&#39;t match" placeholder="Confirm Password" required="required" type="password">
+                              <div class="help-block form-text with-errors form-control-feedback"></div>
+                            </div>
+                          </div>
+                        </div> -->
+                        
+                        
+                      </fieldset>
+                     
+                      <!-- <div class="form-check">
+                        <label class="form-check-label"><input name = "is_superuser" id="is_superuser" class="form-check-input" type="checkbox">Create as admin user</label>
+                      </div> -->
+                      <div class="form-check">
+                        <label class="form-check-label"><input name = "is_active" id="is_active" class="form-check-input" type="checkbox">Active Tenant</label>
+                      </div>
+                      <div class="form-buttons-w">
+                        <button class="btn btn-primary" type="submit" id="submit"> Submit</button>
+                      </div> 
+                      {% if error %}
+                      <div class="row">
+                        <hr>
+                        <br>
+                        <div class=" col-sm-6 alert alert-danger" role="alert">
+                        <strong>Oh snap! </strong> Cell Leader with that Username exists
+                      </div>
+                      </div>
+                      {% endif %}
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+              <div class="element-wrapper col-md-8">
+                <div class="element-box">
+                  
+                  <div class="form-desc">                     
+                    <h6> You are currently viewing 10 most recent transactions</h6>
+                  </div>
+                  <div class="table-responsive">
+                    <!--------------------
+                    START - Basic Table
+                    -------------------->
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th class="text-left">
+                            Date
+                          </th>
+                          <th class="text-left">
+                            For-Month
+                          </th>
+                          <th class="text-left">
+                            Amount
+                          </th>
+                          
+                        </tr>
+                      </thead>
+                      <tbody>
+                       {% for transaction in transactions %}
+                       
+                        <tr>
+                          <td class="text-left">
+                            {{transaction.date}}  
+                          </td>
+                          <td class="text-left">
+                              {{transaction.month}}
+                          </td>
+                          <td class="text-left">
+                              {{transaction.amount}}
+                          </td>
+
+                        </tr>
+                        {% endfor%}
+                      </tbody>
+                    </table>
+                    <!--------------------
+                    END - Basic Table
+                    -------------------->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+              <div aria-hidden="true" aria-labelledby="mySmallModalLabel" class="modal fade bd-example-modal-sm" role="dialog" tabindex="-1">
+                <div class="modal-dialog modal-sm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title text-center" id="exampleModalLabel">
+                        Success
+                      </h4>
+                      <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true"> &times;</span></button>
+                    </div>
+                   
+                   
+                  </div>
+                </div>
+              </div>
+              <div aria-hidden="true" aria-labelledby="mySmallModalLabel" class="modal fade bd-example-modal-sm-fail" role="dialog" tabindex="-1">
+                <div class="modal-dialog modal-sm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title text-center" id="exampleModalLabel">
+                        Failed
+                      </h4>
+                      <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true"> &times;</span></button>
+                    </div>
+                   
+                   
+                  </div>
+                </div>
+              </div>
+          <!--------------------
+          START - Color Scheme Toggler
+          -------------------->
+
+{% endblock  %}
