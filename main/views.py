@@ -74,104 +74,6 @@ def edit(request):
     return render(request, 'store/edit_tenant.html', {'tenant': tenant, "tenant_user":tenant_user, 
                                                         "transactions":transactions})
 
-@login_required
-def add_leader(request):
-
-    form    = UserAccountForm()
-
-    traders = Trader.objects.all()
-    total_funds = Funds.objects.aggregate(sum=Sum('amount'))['sum']
-    cell_leaders = UserAccount.objects.filter(user__is_superuser = False)
-
-
-    if request.method == 'POST':
-        username = (request.POST['username'])
-        lname = (request.POST['last_name'])
-        fname = (request.POST['first_name'])
-        phone = (request.POST['phone'])
-        email = (request.POST['email'])
-        password = (request.POST['password'])
-        cell = (request.POST['cell_name'])
-        dob = (request.POST['dob'])
-        address = (request.POST['address'])
-        is_superuser = (request.POST.get('is_superuser', False))
-        user = User.objects.filter(username = username)
-
-        if user:
-            error = "Username already exists"
-            return render(request, 'store/add_leader.html', {"error":error, 'form':form, 'traders':traders, 'total_funds':total_funds, 'cell_leaders': cell_leaders})
-        
-        new_user = User(first_name = fname, last_name = lname, username = username, email = email, is_superuser = check_value(is_superuser))
-
-        new_user.save()
-
-        new_useraccount = UserAccount( dob = format_date(dob), phone = phone, address = address,
-                                        cell = cell, user_id = new_user.id )
-        new_useraccount.save()
-
-        new_user.set_password(password)
-
-
-        if form.is_valid():
-            form.cleaned_data("username")
-            print("-----------------------------")
-
-    return render(request, 'store/add_leader.html', { 'form':form, 'traders':traders, 'total_funds':total_funds, 'cell_leaders': cell_leaders})
-
-@login_required
-def add(request):
-    traders = Trader.objects.all()
-    total_funds = Funds.objects.aggregate(sum=Sum('amount'))['sum']
-    cell_leaders = UserAccount.objects.filter(user__is_superuser = False)
-
-    form    = TraderForm()
-    result  = {}
-
-    if request.method == 'POST':
-        lname = (request.POST['lname'])
-        fname = (request.POST['fname'])
-        phone = (request.POST['phone'])
-        products = (request.POST['products'])
-        income = ( request.POST['income'])
-        occupation = ( request.POST['occupation'])
-        dob = ( request.POST['dob'])
-        business_date = ( request.POST['business_date'])
-        city = ( request.POST['city'])
-        business_worth = ( request.POST['business_worth'])
-        address = ( request.POST['address'])
-        why_no_spouse = ( request.POST['why_no_spouse'])
-        trade_address = ( request.POST['trade_address'])
-        why_no_spouse = ( request.POST['why_no_spouse'])
-        business_needs = ( request.POST['business_needs'])
-        supplier = ( request.POST['supplier'])
-        cell_name = ( request.POST['cell_name'])
-        num_kids = ( request.POST['num_kids'])
-        fund_needed = ( request.POST['fund_needed'])
-        do_you_save = (request.POST.get('do_you_save', False))
-        have_kids = (request.POST.get('have_kids', False))
-        change_business = (request.POST.get('change_business', False))
-        with_spouse = (request.POST.get('with_spouse', False))
-        cell_lead = User.objects.get(username = "admin")
-
-        # Attempt to grab information from the raw form information.
-        # Note that we make use of both UserForm and UserProfileForm.
-
-        if request.user.is_authenticated :
-
-            new_trader = Trader(lname = lname, fname = fname, phone = phone, products= products,income = income, do_you_save = check_value(do_you_save), 
-                                have_kids = check_value(have_kids), num_kids = num_kids, occupation = occupation, business_date = format_date(business_date), dob = format_date(dob), city = city, address = address, 
-                                trade_address = trade_address, business_worth = business_worth, with_spouse = check_value(with_spouse), why_no_spouse = why_no_spouse, 
-                                business_needs = business_needs, supplier = supplier, change_business = check_value(change_business), fund_needed = fund_needed, 
-                                cell_name = cell_name, cell_leader_id = cell_lead.id)
-
-
-            new_trader.save()
-            print(new_trader)
-
-        add_traderForm = TraderForm(request.POST)
-
-    return render(request, 'store/add_trader.html', { 'form':form, 'traders':traders, 'total_funds':total_funds, 'cell_leaders': cell_leaders})
-
 
 def format_date(date):
     "**Change date format for django**"
@@ -273,13 +175,18 @@ def run_budget():
         Global_Var = Global_var.objects.get(description = "Global_Variables")
         flats = UserAccount.objects.filter(user__is_active = True, stays_in = "flat").count()
         b_quarters = UserAccount.objects.filter(user__is_active = True, stays_in = "bq").count()
-        print(flats, b_quarters)
+        # print(flats, b_quarters)
         budget = (flats * Global_Var.flat) +  (b_quarters * Global_Var.b_quarters)        
         month.budget = budget
         month.save()
 
 
-    
+def add_income(request):
+        tenant = UserAccount.objects.all().order_by("fname")
+
+        return render(request, 'store/add_income.html', {"tenant":tenant})
+def add_expense(request):
+    return render(request, 'store/add_expense.html')
 
 
 
@@ -309,6 +216,132 @@ def run_budget():
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# @login_required
+# def add_leader(request):
+
+#     form    = UserAccountForm()
+
+#     traders = Trader.objects.all()
+#     total_funds = Funds.objects.aggregate(sum=Sum('amount'))['sum']
+#     cell_leaders = UserAccount.objects.filter(user__is_superuser = False)
+
+
+#     if request.method == 'POST':
+#         username = (request.POST['username'])
+#         lname = (request.POST['last_name'])
+#         fname = (request.POST['first_name'])
+#         phone = (request.POST['phone'])
+#         email = (request.POST['email'])
+#         password = (request.POST['password'])
+#         cell = (request.POST['cell_name'])
+#         dob = (request.POST['dob'])
+#         address = (request.POST['address'])
+#         is_superuser = (request.POST.get('is_superuser', False))
+#         user = User.objects.filter(username = username)
+
+#         if user:
+#             error = "Username already exists"
+#             return render(request, 'store/add_leader.html', {"error":error, 'form':form, 'traders':traders, 'total_funds':total_funds, 'cell_leaders': cell_leaders})
+        
+#         new_user = User(first_name = fname, last_name = lname, username = username, email = email, is_superuser = check_value(is_superuser))
+
+#         new_user.save()
+
+#         new_useraccount = UserAccount( dob = format_date(dob), phone = phone, address = address,
+#                                         cell = cell, user_id = new_user.id )
+#         new_useraccount.save()
+
+#         new_user.set_password(password)
+
+
+#         if form.is_valid():
+#             form.cleaned_data("username")
+#             print("-----------------------------")
+
+#     return render(request, 'store/add_leader.html', { 'form':form, 'traders':traders, 'total_funds':total_funds, 'cell_leaders': cell_leaders})
+
+
+
+
+
+
+# @login_required
+# def add(request):
+#     traders = Trader.objects.all()
+#     total_funds = Funds.objects.aggregate(sum=Sum('amount'))['sum']
+#     cell_leaders = UserAccount.objects.filter(user__is_superuser = False)
+
+#     form    = TraderForm()
+#     result  = {}
+
+#     if request.method == 'POST':
+#         lname = (request.POST['lname'])
+#         fname = (request.POST['fname'])
+#         phone = (request.POST['phone'])
+#         products = (request.POST['products'])
+#         income = ( request.POST['income'])
+#         occupation = ( request.POST['occupation'])
+#         dob = ( request.POST['dob'])
+#         business_date = ( request.POST['business_date'])
+#         city = ( request.POST['city'])
+#         business_worth = ( request.POST['business_worth'])
+#         address = ( request.POST['address'])
+#         why_no_spouse = ( request.POST['why_no_spouse'])
+#         trade_address = ( request.POST['trade_address'])
+#         why_no_spouse = ( request.POST['why_no_spouse'])
+#         business_needs = ( request.POST['business_needs'])
+#         supplier = ( request.POST['supplier'])
+#         cell_name = ( request.POST['cell_name'])
+#         num_kids = ( request.POST['num_kids'])
+#         fund_needed = ( request.POST['fund_needed'])
+#         do_you_save = (request.POST.get('do_you_save', False))
+#         have_kids = (request.POST.get('have_kids', False))
+#         change_business = (request.POST.get('change_business', False))
+#         with_spouse = (request.POST.get('with_spouse', False))
+#         cell_lead = User.objects.get(username = "admin")
+
+#         # Attempt to grab information from the raw form information.
+#         # Note that we make use of both UserForm and UserProfileForm.
+
+#         if request.user.is_authenticated :
+
+#             new_trader = Trader(lname = lname, fname = fname, phone = phone, products= products,income = income, do_you_save = check_value(do_you_save), 
+#                                 have_kids = check_value(have_kids), num_kids = num_kids, occupation = occupation, business_date = format_date(business_date), dob = format_date(dob), city = city, address = address, 
+#                                 trade_address = trade_address, business_worth = business_worth, with_spouse = check_value(with_spouse), why_no_spouse = why_no_spouse, 
+#                                 business_needs = business_needs, supplier = supplier, change_business = check_value(change_business), fund_needed = fund_needed, 
+#                                 cell_name = cell_name, cell_leader_id = cell_lead.id)
+
+
+#             new_trader.save()
+#             print(new_trader)
+
+#         add_traderForm = TraderForm(request.POST)
+
+#     return render(request, 'store/add_trader.html', { 'form':form, 'traders':traders, 'total_funds':total_funds, 'cell_leaders': cell_leaders})
 
 
 

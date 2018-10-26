@@ -14,7 +14,7 @@
                     <form id="formValidate" action="/add"  method= "POST" enctype="multipart/form-data">
                       {% csrf_token %}
                       <h5 class="form-header">
-                        Add Expense Form
+                        Add Trader Form
                       </h5>
                       <div class="form-desc">
                         Validation of the form is made possible using powerful validator plugin for bootstrap. <a href="http://1000hz.github.io/bootstrap-validator/" target="_blank">Learn more about Bootstrap Validator</a>
@@ -24,13 +24,13 @@
                         <div class="row">
                           <div class="col-sm-6">
                             <div class="form-group">
-                              <label for="id_fname"> First Name</label><input name="fname" id="id_fname" class="form-control" data-error="Please input your First Name" placeholder="First Name" required="required" type="text">
+                              <label for="id_description"> Description</label><input required type="text" value="0" name="description" id="description" class="form-control" data-error="Please input your Details" placeholder="Details of transaction" required="required" type="text">
                               <div class="help-block form-text with-errors form-control-feedback"></div>
                             </div>
                           </div>
                           <div class="col-sm-6">
                             <div class="form-group">
-                              <label for="id_lname">Last Name</label><input name = "lname" id="id_lname" class="form-control" data-error="Please input your Last Name" placeholder="Last Name" required="required" type="text">
+                              <label for="id_lname">Amount</label><input name = "lname" id="id_lname" class="form-control" data-error="Please input your Last Name" placeholder="Last Name" required="required" type="text">
                               <div class="help-block form-text with-errors form-control-feedback"></div>
                             </div>
                           </div>
@@ -38,7 +38,7 @@
                         <div class="row">
                           <div class="col-sm-6">
                             <div class="form-group">
-                              <label for="id_dob"> Date of Birth</label><input name = "dob" id="id_dob" class="single-daterange form-control" placeholder="Date of birth" type="text" data-date-format="YYYY-MMMM-DD">
+                              <label for="date"> Date recieved</label><input name = "date" id="date" class="single-daterange form-control" placeholder="Date of birth" type="text" data-date-format="YYYY-MMMM-DD">
                             </div>
                           </div>
                           <div class="col-sm-6">
