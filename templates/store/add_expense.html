@@ -2,168 +2,115 @@
 {% load static %}
 
 {% block content %}
-          <!--------------------
-          END - Breadcrumbs
-          -------------------->
+
+          <!-- END - Breadcrumbs -->
+                 
           <div class="row">
               <div class="col-sm-12">
                 <div class="element-wrapper">
                   <div class="element-box">
 
 
-                    <form id="formValidate" action="/add"  method= "POST" enctype="multipart/form-data">
+                    <form id="add_expense_form" action="#"  method= "POST" enctype="multipart/form-data">
+                      <span id = "csrf"></span>
                       {% csrf_token %}
                       <h5 class="form-header">
-                        Add Trader Form
+                        Expense Input Form
                       </h5>
-                      <div class="form-desc">
-                        Validation of the form is made possible using powerful validator plugin for bootstrap. <a href="http://1000hz.github.io/bootstrap-validator/" target="_blank">Learn more about Bootstrap Validator</a>
-                      </div>
                       <fieldset class="form-group">
-                        <legend><span>Biodata Section</span></legend>
+                        <legend><span>Expense Data Section</span></legend>
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <div class="form-group">
+                              <label for="amount">Description (What is being paid for ?)</label><input type="text" required  name = "description" id="description" class="form-control" data-error="Please input an Text" placeholder="e.g (First diesel purchase of the month)" required="required" type="text">
+                              <div class="help-block form-text with-errors form-control-feedback"></div>
+                            </div>
+                          </div>
+
+                        </div> 
                         <div class="row">
                           <div class="col-sm-6">
                             <div class="form-group">
-                              <label for="id_description"> Description</label><input required type="text" value="0" name="description" id="description" class="form-control" data-error="Please input your Details" placeholder="Details of transaction" required="required" type="text">
+                              <label for="amount">Amount</label><input type="text" required  name = "amount" id="amount" class="form-control" data-error="Please input an amount" placeholder="12000" required="required" type="number">
                               <div class="help-block form-text with-errors form-control-feedback"></div>
                             </div>
                           </div>
                           <div class="col-sm-6">
                             <div class="form-group">
-                              <label for="id_lname">Amount</label><input name = "lname" id="id_lname" class="form-control" data-error="Please input your Last Name" placeholder="Last Name" required="required" type="text">
-                              <div class="help-block form-text with-errors form-control-feedback"></div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                              <label for="date"> Date recieved</label><input name = "date" id="date" class="single-daterange form-control" placeholder="Date of birth" type="text" data-date-format="YYYY-MMMM-DD">
-                            </div>
-                          </div>
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                              <label for=""> Business started</label><input name = "business_date" id="business_date"  class="single-daterange form-control" placeholder="Date of birth" type="text" value="04/12/1978">
-                            </div>
-                          </div>
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                              <label for="id_phone"> Phone</label><input name = "phone" id="id_phone" class=" form-control" placeholder="Phone Number" required="required" type="phone" >
-                            </div>
-                          </div>
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                              <label for="">Cell member of  </label><input name = "cell_name" id="cell_name" class=" form-control" placeholder="Cell name" type="Text" >
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-
-                          <div class="col-sm-6">
-                              <div class="form-check">
-                                  <label class="form-check-label"><input name = "with_spouse" id="with_spouse" class="form-check-input" type="checkbox">Living with spouse</label>
-                                </div>
-                            <div class="form-group">
-                              <label for=""> </label><input name = "why_no_spouse" id="why_no_spouse" class="form-control" placeholder="If no why" type="text" value="">
-                            </div>
-                          </div>
-                          <div class="col-sm-6">
-                              <div class="form-check">
-                                  <label class="form-check-label"><input name = "have_kids" id="have_kids"  class="form-check-input" type="checkbox">Do you have kids</label>
-                                </div>
-                            <div class="form-group">
-                              <label for=""> </label><input name = "num_kids" id="num_kids" class="form-control" placeholder="Number of kids" type="number" value="">
+                              <label for=""> Transaction Date</label><input name = "date" id="date"  class="single-daterange form-control" placeholder="" type="date" value="2018-10-25">
                             </div>
                           </div>
 
-                          <div class="col-sm-6">
-                            
-                            <div class="form-group">
-                              <label for="">Address </label><input name = "address" id="address" class="form-control" placeholder="Address" type="text" value="">
-                            </div>
-                          </div>
-                          <div class="col-sm-6">
-                            
-                            <div class="form-group">
-                              <label for="">City </label><input name = "city" id="city" class="form-control" placeholder="City" type="text" value="">
-                            </div>
-                          </div>
-                        </div>
+                        </div> 
+                         
                       
-                        
-                        
-
-
-                        <legend><span>Business Section</span></legend>
-                        <div class="form-group">
-                          <label> Business Address</label><input name = "trade_address" id="trade_address" class="form-control" placeholder="Business Address" type="text" value="">
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                            <label for="id_occupation">Type of Business </label><input name = "occupation" id="id_occupation" class="form-control" placeholder="Type of Business" type="text" value="">
-                          </div>
-                          </div>
-                          <div class="col-sm-6">
-                              <div class="form-group">
-                                <label for="">Products </label><input name = "products" id="products" class="form-control" placeholder="Products" type="text" value="">
-                              </div>
-                          </div>
-                          <div class="col-sm-6">
-                              <div class="form-group">
-                                <label for="">Supplier </label><input name = "supplier" id="supplier"  class="form-control" placeholder="Supplier" type="text" value="">
-                              </div>
-                          </div>
-                          <div class="col-sm-6">
-                              
-                          </div>
-                          <div class="col-sm-6">
-                              <div class="form-group">
-                                <label for="">Business needs </label><input name = "business_needs" id="business_needs" class="form-control" placeholder="Business needs" type="text" value="">
-                              </div>
-                          </div>
-                          <div class="col-sm-6">
-                              <div class="form-group">
-                                <label for="">Business worth </label><input name = "business_worth" id="business_worth" class="form-control" placeholder="Business worth" type="number" value="">
-                              </div>
-                          </div>
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                              <label for="">Income </label><input name = "income" id="income" class="form-control" placeholder="Income" type="number" value="">
-                            </div>
-                          </div>
-                            
-                          <div class="col-sm-6">
-                             <div class="form-group">
-                            <label for="">Funds needed </label><input name = "fund_needed" id="fund_needed" class="form-control" placeholder="Funds needed" type="number" value="">
-                            </div>
-                          </div>
-
-                          <div class="col-sm-6">
-                              <div class="form-check">
-                                  <label class="form-check-label"><input name = "do_you_save" id= "do_you_save" class="form-check-input" type="checkbox" value="on">Do you save </label>
-                                </div>
-                          </div>
-                          <div class="col-sm-6">
-                              <div class="form-check">
-                                  <label class="form-check-label"><input name = "change_business" id= "change_business" class="form-check-input" type="checkbox">Do you want to change business</label>
-                                </div>
-                          </div>
-                        </div>
-                        
                       </fieldset>
-                     
-                      <!-- <div class="form-check">
-                        <label class="form-check-label"><input class="form-check-input" type="checkbox">I agree to terms and conditions</label>
-                      </div> -->
-                      <div class="form-buttons-w">
-                        <button class="btn btn-primary" type="submit"> Submit</button>
+                   
+                      <div class="form-check">
+                        <label class="form-check-label"><input name = "is_ok" id="is_ok" class="form-check-input" type="checkbox">I have confirmed that my inputs are correct and can proceed to saving</label>
                       </div>
+                      <div class="form-buttons-w">
+                        <button class="btn btn-primary" type="submit" id="submit"> Submit</button>
+                      </div> 
+                      {% if error %}
+                      <div class="row">
+                        <hr>
+                        <br>
+                        <div class=" col-sm-6 alert alert-danger" role="alert">
+                        <strong>Oh snap! </strong> Sorry something went wrong
+                      </div>
+                      </div>
+                      {% endif %}
                     </form>
+
                   </div>
                 </div>
               </div>
+             
             </div>
+
+              <div aria-hidden="true" aria-labelledby="mySmallModalLabel" class="modal fade bd-example-modal-sm" role="dialog" tabindex="-1">
+                <div class="modal-dialog modal-sm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title text-center" id="exampleModalLabel">
+                        Success
+                      </h4>
+                      <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true"> &times;</span></button>
+                    </div>
+                   
+                   
+                  </div>
+                </div>
+              </div>
+              <div aria-hidden="true" aria-labelledby="mySmallModalLabel" class="modal fade bd-example-modal-sm-confirm" role="dialog" tabindex="-1">
+                <div class="modal-dialog modal-sm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title text-center" id="exampleModalLabel">
+                        Please Tap The Check Box Below 
+                      </h4>
+                      <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true"> &times;</span></button>
+                    </div>
+                   
+                   
+                  </div>
+                </div>
+              </div>
+              <div aria-hidden="true" aria-labelledby="mySmallModalLabel" class="modal fade bd-example-modal-sm-fail" role="dialog" tabindex="-1">
+                <div class="modal-dialog modal-sm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title text-center" id="exampleModalLabel">
+                        Sorry Failed..!!
+                      </h4>
+                      <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true"> &times;</span></button>
+                    </div>
+                   
+                   
+                  </div>
+                </div>
+              </div>
           <!--------------------
           START - Color Scheme Toggler
           -------------------->

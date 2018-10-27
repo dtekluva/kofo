@@ -93,11 +93,13 @@ $(function () {
 $('#month_selec').on('change', (async function () {
   // console.dir(this.value.toLowerCase());
   dataSet = [];
+  debtors = 0;
   let current_month = (document.getElementById('month_selec').value).toLowerCase();
   let current_year = (document.getElementById('year_selec').value);
   evaluate_data_for_table(current_month, current_year );
   // console.log(current_year)
   update_table();
+  update_debtors();
 }));
 
   // #5. DATATABLES
@@ -109,6 +111,7 @@ var users = [];
 var transactions = [];
 let _all_months = ["january", "february", "march", "april", "may", "june", "july", 
                     "august", "september", "october", "november", "december"]
+var debtors = 0
 
 var create_table = ()=>{
   // console.log(dataSet)
@@ -162,9 +165,9 @@ promise.done(function(data) {
             evaluate_data_for_table(date_data[0], date_data[1]);
             
           }).then(()=>{
-
             create_table();
-
+            update_debtors()
+            
           });
 
 
@@ -173,10 +176,13 @@ promise.done(function(data) {
 
   // #MISC update totals in html
 
-function update_totals(t_posts, devices, posts_t ){
-    let total_posts = (document.getElementById('t_posts').innerHTML) = t_posts
-    let total_devices = (document.getElementById('devices').innerHTML) =devices
-    let total_today = (document.getElementById('t_today').innerHTML) =  posts_t
+function update_debtors(){
+  for (let i = 0; i <= debtors; i++){
+    setTimeout(() => {
+
+      let debtors_div = (document.getElementById('debtors').innerHTML) = i +" users"
+    }, 500);
+  }
     }
 
 
@@ -186,10 +192,10 @@ var rearrange_response = (data)=>{
     if(element.model == "auth.user"){
       users.push(element)
     }
-    else if (element.model == "useraccounts.useraccount"){
+    else if (element.model == "useraccounts.useraccount" ){
       useraccounts.push(element)
     }
-    else if (element.model == "useraccounts.transactions"){
+    else if (element.model == "useraccounts.transactions" && element.fields.transaction_type == "income"){
       transactions.push(element)
     };
   });
@@ -265,6 +271,9 @@ var get_paid = ((user, current_month, current_year)=>{
       }
       
   })
+  if (total_paid == 0){
+    debtors += 1;
+  }
   return (total_paid) ;
 });
 

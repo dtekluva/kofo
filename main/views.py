@@ -31,8 +31,12 @@ def index(request):
     overall_total_expense = Transactions.objects.filter(transaction_type = "expense").aggregate(sum=Sum('amount'))['sum']
     cell_leaders = UserAccount.objects.filter(user__is_superuser = False)
     budget = Months.objects.get(name = populate.get_month()).budget
-    excess = total_funds - budget  
-    balance =overall_total_funds - ( overall_total_expense if overall_total_expense > 0 else 0)
+    try:
+        excess = total_funds - budget  
+        balance =overall_total_funds - ( overall_total_expense if overall_total_expense > 0 else 0)
+    except:
+        excess = 0
+        balance = 0
     # balance = overall_total_expense
     # print("\t\t", balance)
     useraccount = UserAccount.objects.get(user__username = request.user)
@@ -75,21 +79,8 @@ def edit(request):
                                                         "transactions":transactions})
 
 
-def format_date(date):
-    "**Change date format for django**"
-    date = date.split("/")
 
-    return (date[2]+"-"+date[1]+"-"+date[0])
-
-
-def check_value(value):
-    
-    if value == "on":
-        return True
-    
-    else:
-        return value
-
+@login_required
 def get_data(request):
 
     transactions = Transactions.objects.all()
@@ -114,9 +105,8 @@ def post_data(request): #save edit tenant data
 
         tenant = UserAccount.objects.get(id = tenant_id)
         tenant_user = User.objects.get(id = tenant.user_id)
-
-        tenant.fname = tenant.first_name = cleaned_form['first_name']
-        tenant.lname = tenant.last_name = cleaned_form['last_name']
+        tenant.fname = tenant_user.first_name = cleaned_form['first_name']
+        tenant.lname = tenant_user.last_name = cleaned_form['last_name']
         tenant.phone = cleaned_form['phone']
         tenant.address = cleaned_form['address']
         tenant.stays_in = cleaned_form['lives_in']
@@ -159,16 +149,16 @@ def create_tenant(request):
                                         , address = address, user_id = new_user.id, fee = fee, is_active = is_active )
         new_useraccount.save()
 
-        new_user.set_password("kofouser2018")
+        new_user.set_password("alltheblessings")
 
         return HttpResponse(json.dumps({"response":"success"}))
-    # except:
-    #         return HttpResponse(json.dumps({"response":"fail"}))
+
 
     return render(request, 'store/add_tenant.html')
 
 
 def run_budget():
+
     month = Months.objects.get(name = populate.get_month())
     budget = 0
     if (0 == 0):
@@ -180,13 +170,74 @@ def run_budget():
         month.budget = budget
         month.save()
 
-
+@login_required
 def add_income(request):
-        tenant = UserAccount.objects.all().order_by("fname")
+    
+    tenant = UserAccount.objects.all().order_by("fname")
 
-        return render(request, 'store/add_income.html', {"tenant":tenant})
+    return render(request, 'store/add_income.html', {"tenant":tenant})
+
+@login_required
+def save_income(request):
+
+    tenant = UserAccount.objects.all().order_by("fname")
+
+    if request.method == "POST":
+
+        cleaned_form = helpers.clean(request.POST)
+
+        amount = cleaned_form['amount']
+        recieved = cleaned_form['recieved']
+        month = cleaned_form['month']
+        user_id = cleaned_form['user_id']
+        actual_month_name = (populate.months[int(month[5:])-1]).strip() #get actual month from javascript #2018 02 format
+        useraccount = UserAccount.objects.get(id = int(user_id))
+        user = User.objects.get(id = useraccount.user_id)
+
+        month = Months.objects.get(name = actual_month_name)
+
+        new_trans = Transactions(target_month_id = month.id, amount = amount, month = month.name, 
+                            user_id = user.id, date = (recieved))
+        new_trans.save()
+
+        return HttpResponse(json.dumps({"response":"success"}))
+
+    return HttpResponse(json.dumps({"response":"Failed"}))
+
+
+@login_required
 def add_expense(request):
-    return render(request, 'store/add_expense.html')
+
+    tenant = UserAccount.objects.all().order_by("fname")
+
+    return render(request, 'store/add_expense.html', {"tenant":tenant})
+
+
+@login_required
+def save_expense(request):
+    tenant = UserAccount.objects.all().order_by("fname")
+    # print(request.POST)
+    if request.method == "POST":
+        exempted_fields = "description"
+        cleaned_form = helpers.clean(request.POST, exempted_fields)
+
+        description = cleaned_form['description']
+        amount = cleaned_form['amount']
+        date = cleaned_form['date']
+        actual_month_name = (populate.months[(datetime.strptime(date, '%Y-%m-%d')).month-1]) #get actual month from javascript format
+        # useraccount = UserAccount.objects.get(id = int(user_id))
+        user = User.objects.get(is_superuser = True)
+        # print(user)
+
+        month = Months.objects.get(name = actual_month_name)
+
+        new_trans = Transactions(target_month_id = month.id, amount = amount, month = month.name, 
+                                user_id = user.id, date = (date), transaction_type = "expense", description = description)
+        new_trans.save()
+
+        return HttpResponse(json.dumps({"response":"success"}))
+
+    return HttpResponse(json.dumps({"response":"Failed"}))
 
 
 

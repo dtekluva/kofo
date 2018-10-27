@@ -11,24 +11,20 @@
                   <div class="element-box">
 
 
-                    <form id="edit_form" action="#"  method= "POST" enctype="multipart/form-data">
+                    <form id="add_income_form" action="#"  method= "POST" enctype="multipart/form-data">
                       <span id = "csrf"></span>
                       {% csrf_token %}
                       <h5 class="form-header">
                         Tenant Income Form
                       </h5>
-                      <div class="form-desc">
-                        You are currently viewing <span><h6></h6></span>
-                      </div>
-                      <input type="hidden" name="user_id" value="{{tenant.id}}">
                       <fieldset class="form-group">
                         <legend><span>Income Data Section</span></legend>
                         <div class="row">
                           <div class="col-sm-6">
                             <div class="form-group">
                                 <label for=""> Tenant</label>
-                                <select id="lives_in" class="form-control">
-                                  <option value="flat">
+                                <select id="user_id" class="form-control">
+                                  <option value="null">
                                     Select Paying Tenant
                                   </option>
                                   {% for tenant in tenant %}
@@ -42,7 +38,7 @@
 
                           <div class="col-sm-6">
                             <div class="form-group">
-                              <label for="amount">Amount</label><input type="text" required value="0" name = "amount" id="amount" class="form-control" data-error="Please input an amount" placeholder="12000" required="required" type="number">
+                              <label for="amount">Amount</label><input type="text" required  name = "amount" id="amount" class="form-control" data-error="Please input an amount" placeholder="12000" required="required" type="number">
                               <div class="help-block form-text with-errors form-control-feedback"></div>
                             </div>
                           </div>
@@ -51,12 +47,12 @@
                          
                           <div class="col-sm-6">
                             <div class="form-group">
-                              <label for=""> Date Recieved</label><input name = "business_date" id="business_date"  class="single-daterange form-control" placeholder="" type="date" value="04/12/1978">
+                              <label for=""> Date Recieved</label><input name = "recieved" id="recieved"  class="single-daterange form-control" placeholder="" type="date" value="2018-10-25">
                             </div>
                           </div>
                           <div class="col-sm-6">
                             <div class="form-group">
-                              <label for=""> Month payed for</label><input name = "business_date" id="business_date"  class="single-daterange form-control" placeholder="July 2018" type="month" value="04/12/1978">
+                              <label for=""> Being Payment For What Month</label><input name = "month" id="month"  class="single-daterange form-control" placeholder="2018-10" type="month" value="2018-10">
                             </div>
                           </div>
 
@@ -66,7 +62,7 @@
                       </fieldset>
                    
                       <div class="form-check">
-                        <label class="form-check-label"><input name = "is_active" id="is_active" class="form-check-input" type="checkbox">I have confirmed that my inputs are correct and can proceed to saving</label>
+                        <label class="form-check-label"><input name = "is_ok" id="is_ok" class="form-check-input" type="checkbox">I have confirmed that my inputs are correct and can proceed to saving</label>
                       </div>
                       <div class="form-buttons-w">
                         <button class="btn btn-primary" type="submit" id="submit"> Submit</button>
@@ -76,7 +72,7 @@
                         <hr>
                         <br>
                         <div class=" col-sm-6 alert alert-danger" role="alert">
-                        <strong>Oh snap! </strong> Cell Leader with that Username exists
+                        <strong>Oh snap! </strong> Sorry something went wrong
                       </div>
                       </div>
                       {% endif %}
@@ -102,12 +98,26 @@
                   </div>
                 </div>
               </div>
+              <div aria-hidden="true" aria-labelledby="mySmallModalLabel" class="modal fade bd-example-modal-sm-confirm" role="dialog" tabindex="-1">
+                <div class="modal-dialog modal-sm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title text-center" id="exampleModalLabel">
+                        Please Tap The Check Box Below 
+                      </h4>
+                      <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true"> &times;</span></button>
+                    </div>
+                   
+                   
+                  </div>
+                </div>
+              </div>
               <div aria-hidden="true" aria-labelledby="mySmallModalLabel" class="modal fade bd-example-modal-sm-fail" role="dialog" tabindex="-1">
                 <div class="modal-dialog modal-sm">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h4 class="modal-title text-center" id="exampleModalLabel">
-                        Failed
+                        Sorry Failed..!!
                       </h4>
                       <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true"> &times;</span></button>
                     </div>
