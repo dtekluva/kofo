@@ -130,7 +130,7 @@ def get_month():
 def populate_users_passwords():
 
     for i in range(len(lname)):
-        new_user = User.objects.get(username = fname[i])
+        new_user = User.objects.get(username = lname[i].lower())
         # new_user = User(first_name = fname[i], last_name = lname[i], username = lname[i].lower, email = fname[i]+"@gmail.com")
 
         # new_user.save()
