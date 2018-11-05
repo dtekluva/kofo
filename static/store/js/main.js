@@ -24,7 +24,7 @@ Main javascript functions to init most of the elements
 #13. EMAIL APP
 #14. FULL CHAT APP
 #15. CRM PIPELINE
-#16. OUR OWN CUSTOM DROPDOWNS 
+#16. OUR OWN CUSTOM DROPDOWNS
 #17. BOOTSTRAP RELATED JS ACTIVATIONS
 #18. TODO Application
 #19. Fancy Selector
@@ -109,7 +109,7 @@ var date_data = [];
 var useraccounts = [];
 var users = [];
 var transactions = [];
-let _all_months = ["january", "february", "march", "april", "may", "june", "july", 
+let _all_months = ["january", "february", "march", "april", "may", "june", "july",
                     "august", "september", "october", "november", "december"]
 var debtors = 0
 
@@ -134,7 +134,7 @@ $(document).ready(function() {
             'pdf'
         ]
   } );
-  
+
   $('.dt-buttons').find('*').addClass('btn btn-primary btn-sm')
 
 } );
@@ -144,11 +144,11 @@ $(document).ready(function() {
 // btn btn-primary btn-sm
 
 var update_table = (()=>{
-      
+
       $('#example').dataTable().fnClearTable();
       $('#example').dataTable().fnAddData(dataSet);
 })
-  
+
 var promise = $.getJSON(host + "get_data");
 
 promise.done(function(data) {
@@ -163,11 +163,11 @@ promise.done(function(data) {
           }).then(()=>{
 
             evaluate_data_for_table(date_data[0], date_data[1]);
-            
+
           }).then(()=>{
             create_table();
             update_debtors()
-            
+
           });
 
 
@@ -206,9 +206,9 @@ var evaluate_data_for_table = ((current_month, current_year)=>{
   useraccounts.forEach((element) => {
     // console.log(element.fields.fname)
         let new_arr = [];
-        new_arr.push((element.fields.fname).toUpperCase() + "  " + (element.fields.lname).toUpperCase() ) 
-        new_arr.push(element.fields.address) 
-        new_arr.push(element.fields.fee) 
+        new_arr.push((element.fields.lname).toUpperCase() + "  " + (element.fields.fname).toUpperCase() )
+        new_arr.push(element.fields.address)
+        new_arr.push(element.fields.fee)
         new_arr.push(get_paid(element, current_month, current_year)) //change to amount paid from transactions
         new_arr.push(get_bal(element, current_month, current_year)) //resolve balance write function
         new_arr.push(get_excess(element, current_month, current_year)) //resolve Excess
@@ -225,19 +225,19 @@ var get_bal = ((user, current_month, current_year)=>{
 
   transactions.forEach((element)=>{
 
-    if (element.fields.user == user.fields.user && 
-        _all_months.indexOf(current_month.toLowerCase()) >= _all_months.indexOf(element.fields.month) && 
+    if (element.fields.user == user.fields.user &&
+        _all_months.indexOf(current_month.toLowerCase()) >= _all_months.indexOf(element.fields.month) &&
         get_year(element.fields.date) == current_year){
       // console.log(get_year(element.fields.date) == current_year );
           total_paid += element.fields.amount;
       }
-      
+
   })
   return (actual_bill - total_paid) < 0 ? 0 : (actual_bill - total_paid) ;
 });
 
 var get_excess = ((user, current_month, current_year)=>{
-  let _all_months = ["january", "february", "march", "april", "may", "june", "july", 
+  let _all_months = ["january", "february", "march", "april", "may", "june", "july",
                       "august", "september", "october", "november", "december"]
 
   let total_paid = 0
@@ -245,19 +245,19 @@ var get_excess = ((user, current_month, current_year)=>{
 
   transactions.forEach((element)=>{
       // console.log(element)
-      if (element.fields.user == user.fields.user  && 
+      if (element.fields.user == user.fields.user  &&
         _all_months.indexOf(current_month.toLowerCase()) >= _all_months.indexOf(element.fields.month) &&
         get_year(element.fields.date) == current_year){
 
           total_paid += element.fields.amount
       }
-      
+
   })
   return (actual_bill - total_paid) > 0 ? 0 : (actual_bill - total_paid) * -1  ;
 });
 
 var get_paid = ((user, current_month, current_year)=>{
-  let _all_months = ["january", "february", "march", "april", "may", "june", "july", 
+  let _all_months = ["january", "february", "march", "april", "may", "june", "july",
                       "august", "september", "october", "november", "december"]
 
   let total_paid = 0
@@ -269,7 +269,7 @@ var get_paid = ((user, current_month, current_year)=>{
         // console.log(element.fields.user, element.fields.amount)
           total_paid += element.fields.amount
       }
-      
+
   })
   if (total_paid == 0){
     debtors += 1;
@@ -389,7 +389,7 @@ var get_year = ((_date)=>{
   //     liteLineGradientV2.addColorStop(0, 'rgba(40,97,245,0.1)');
   //     liteLineGradientV2.addColorStop(1, 'rgba(40,97,245,0)');
 
-      
+
 
   //     var monooxide_data = [50,50,50,50,50,50,50,50,50,50,50];
   //     var methane_data = [50,50,50,50,50,50,50,50,50,50,50];
@@ -397,7 +397,7 @@ var get_year = ((_date)=>{
   //     var hydrogen_data = [50,50,50,50,50,50,50,50,50,50,50];
 
   //     var get_scale = max_min(monooxide_data.concat(methane_data.concat(air_quality_data.concat(hydrogen_data))))
-      
+
   //     var max = get_scale.get_max;
   //     var min = get_scale.get_min;
 
@@ -405,7 +405,7 @@ var get_year = ((_date)=>{
   //     var lineTension = 0.2;
 
   //     // line chart data
-      
+
 
   //   }
 
@@ -530,7 +530,7 @@ var get_year = ((_date)=>{
   //              max: max,
   //              min: min,
   //              stepSize: step
-  //             }, 
+  //             },
   //           }, {
   //             display: true,
   //             position: 'right',
@@ -553,8 +553,8 @@ var get_year = ((_date)=>{
   //     myLiteLineChartV2.data.datasets[1].data = methane_data;
   //     myLiteLineChartV2.data.datasets[2].data = hydrogen_data;
   //     myLiteLineChartV2.data.datasets[3].data = air_quality_data;
-      
-  //     myLiteLineChartV2.data.labels = myLiteLineChartV2.data.labels = 
+
+  //     myLiteLineChartV2.data.labels = myLiteLineChartV2.data.labels =
   //     myLiteLineChartV2.data.labels = myLiteLineChartV2.data.labels = labels;
 
   //     myLiteLineChartV2.update();
@@ -578,7 +578,7 @@ var get_year = ((_date)=>{
   //       air_quality_data.push(dataSet[index][4]);
   //       hydrogen_data.push(dataSet[index][5]);
 
-     
+
   //  }
   // })
 
@@ -611,7 +611,7 @@ var get_year = ((_date)=>{
     $('.all-wrapper').toggleClass('content-panel-active');
   });
 
-  // #13. EMAIL APP 
+  // #13. EMAIL APP
 
   $('.more-messages').on('click', function () {
     $(this).hide();
@@ -687,7 +687,7 @@ var get_year = ((_date)=>{
     });
   }
 
-  // #16. OUR OWN CUSTOM DROPDOWNS 
+  // #16. OUR OWN CUSTOM DROPDOWNS
   $('.os-dropdown-trigger').on('mouseenter', function () {
     $(this).addClass('over');
   });

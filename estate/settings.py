@@ -35,7 +35,8 @@ DEBUG = True
 ALLOWED_HOSTS = ['192.168.8.101',
                 'localhost',
                 '192.168.43.118',
-                '192.168.8.100']
+                '192.168.8.100',
+                'kofo.pythonanywhere.com']
 
 
 # Application definition
