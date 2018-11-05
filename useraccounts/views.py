@@ -13,19 +13,21 @@ def signUpView(request):
 
 def loginView(request):
     form = LoginForm()
-    
+
     if request.method == 'POST':
         form = LoginForm(request.POST)
+        print(request.POST)
         # print("---------------------request was post-----------")
         # print(request.POST.get("username", ""))
         # if form.is_valid():
         if True:
             # print("form was valid-----------")
-            # userObj     = form.cleaned_data
+            # userObj     = form.cleaned_data()
             username    = request.POST.get("username", "")
+            username = (username.lower())
             password    = request.POST.get("password", "")
             # print(username, password)
-            user = authenticate(username = username, password = password)
+            user = authenticate(username = (username), password = password)
             try:
                 user = User.objects.get(username=user)
                 if (user.username == username): #allows user to login using username

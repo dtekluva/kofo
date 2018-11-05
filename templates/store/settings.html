@@ -1,0 +1,125 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block content %}
+
+          <!-- END - Breadcrumbs -->
+                 
+          <div class="row">
+              <div class="col-sm-12">
+                <div class="element-wrapper">
+                  <div class="element-box">
+
+
+                    <form id="settings_form" action="#"  method= "POST" enctype="multipart/form-data">
+                      <span id = "csrf"></span>
+                      {% csrf_token %}
+                      <h5 class="form-header">
+                        General Settings Form
+                      </h5>
+                      <fieldset class="form-group">
+                        <legend><span>Manage General Variables & Usage Settings</span></legend>
+                        <div class="row">
+                         
+
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for="amount">Flat Bill</label><input type="text" required  name = "amount" id="flat_amount" class="form-control" data-error="Please input an amount" placeholder="27000" required="required" value="{{bills.flat}}" type="number">
+                              <div class="help-block form-text with-errors form-control-feedback"></div>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for="amount">Boys Quarters Bill</label><input type="text" required  name = "bq_amount" id="amount" class="form-control" data-error="Please input an amount" placeholder="12400" required="required" value="{{bills.b_quarters}}" type="number">
+                              <div class="help-block form-text with-errors form-control-feedback"></div>
+                            </div>
+                          </div>
+                        </div> 
+                        <!-- <div class="row">
+                         
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for=""> Date Recieved</label><input name = "recieved" id="recieved"  class="single-daterange form-control" placeholder="" type="date" value="2018-10-25">
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for=""> Being Payment For What Month</label><input name = "month" id="month"  class="single-daterange form-control" placeholder="2018-10" type="month" value="2018-10">
+                            </div>
+                          </div>
+
+                        </div>  -->
+                         
+                      
+                      </fieldset>
+                   
+                      <div class="form-check">
+                        <label class="form-check-label"><input name = "is_ok" id="is_ok" class="form-check-input" type="checkbox">I have confirmed that my inputs are correct and can proceed to saving</label>
+                      </div>
+                      <div class="form-buttons-w">
+                        <button class="btn btn-primary" type="submit" id="submit"> Submit</button>
+                      </div> 
+                      {% if error %}
+                      <div class="row">
+                        <hr>
+                        <br>
+                        <div class=" col-sm-6 alert alert-danger" role="alert">
+                        <strong>Oh snap! </strong> Sorry something went wrong
+                      </div>
+                      </div>
+                      {% endif %}
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+             
+            </div>
+
+              <div aria-hidden="true" aria-labelledby="mySmallModalLabel" class="modal fade bd-example-modal-sm" role="dialog" tabindex="-1">
+                <div class="modal-dialog modal-sm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title text-center" id="exampleModalLabel">
+                        Success
+                      </h4>
+                      <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true"> &times;</span></button>
+                    </div>
+                   
+                   
+                  </div>
+                </div>
+              </div>
+              <div aria-hidden="true" aria-labelledby="mySmallModalLabel" class="modal fade bd-example-modal-sm-confirm" role="dialog" tabindex="-1">
+                <div class="modal-dialog modal-sm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title text-center" id="exampleModalLabel">
+                        Please Tap The Check Box Below 
+                      </h4>
+                      <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true"> &times;</span></button>
+                    </div>
+                   
+                   
+                  </div>
+                </div>
+              </div>
+              <div aria-hidden="true" aria-labelledby="mySmallModalLabel" class="modal fade bd-example-modal-sm-fail" role="dialog" tabindex="-1">
+                <div class="modal-dialog modal-sm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title text-center" id="exampleModalLabel">
+                        Sorry Failed..!!
+                      </h4>
+                      <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true"> &times;</span></button>
+                    </div>
+                   
+                   
+                  </div>
+                </div>
+              </div>
+          <!--------------------
+          START - Color Scheme Toggler
+          -------------------->
+
+{% endblock  %}

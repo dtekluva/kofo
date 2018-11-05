@@ -38,13 +38,13 @@
                           </div>
                           <div class="col-sm-6">
                             <div class="form-group">
-                              <label for="id_first_name"> First Name</label><input required value="{{tenant.fname}}" name="first_name" id="first_name" class="form-control" data-error="Please input your First Name" placeholder="First Name" required="required" type="text">
+                              <label for="id_first_name"> First Name</label><input required value="{{tenant.fname | upper}}" name="first_name" id="first_name" class="form-control" data-error="Please input your First Name" placeholder="First Name" required="required" type="text">
                               <div class="help-block form-text with-errors form-control-feedback"></div>
                             </div>
                           </div>
                           <div class="col-sm-6">
                             <div class="form-group">
-                              <label for="id_last_name">Last Name</label><input required value="{{tenant.lname}}" name = "last_name" id="last_name" class="form-control" data-error="Please input your Last Name" placeholder="Last Name" required="required" type="text">
+                              <label for="id_last_name">Last Name</label><input required value="{{tenant.lname | upper}}" name = "last_name" id="last_name" class="form-control" data-error="Please input your Last Name" placeholder="Last Name" required="required" type="text">
                               <div class="help-block form-text with-errors form-control-feedback"></div>
                             </div>
                           </div>
@@ -62,7 +62,7 @@
                           <div class="col-sm-6">
                             
                             <div class="form-group">
-                              <label for="">Address </label><input required value="{{tenant.address}}" name = "address" id="address" class="form-control" placeholder="Address" type="text" value="">
+                              <label for="">Address </label><input required value="{{tenant.address | upper}}" name = "address" id="address" class="form-control" placeholder="Address" type="text" value="">
                             </div>
                           </div>
                           
@@ -72,7 +72,7 @@
                               <div class="form-group">
                                   <label for=""> Lives In</label>
                                   <select id="lives_in" class="form-control">
-                                    <option value="flat">
+                                    <option value="{{tenant.stays_in}}">
                                       Select type of apartment
                                     </option>
                                     <option value="bq">
@@ -83,6 +83,12 @@
                                     </option>
                                    </select>
                                 </div>
+                          </div>
+                          <div class="col-sm-6">
+                            
+                            <div class="form-group">
+                              <label for="">Bill </label><input required value="{{tenant.fee}}" name = "fee" id="fee" class="form-control" placeholder="Monthly Fee" type="number">
+                            </div>
                           </div>
                         </div>
                         <!-- <div class="row">
@@ -109,7 +115,7 @@
                         <label class="form-check-label"><input name = "is_superuser" id="is_superuser" class="form-check-input" type="checkbox">Create as admin user</label>
                       </div> -->
                       <div class="form-check">
-                        <label class="form-check-label"><input name = "is_active" id="is_active" class="form-check-input" type="checkbox">Active Tenant</label>
+                        <label class="form-check-label"><input name = "is_active" id="is_active" class="form-check-input" type="checkbox" value=""  {% if tenant.is_active %} checked {% endif %}>Active Tenant</label>
                       </div>
                       <div class="form-buttons-w">
                         <button class="btn btn-primary" type="submit" id="submit"> Submit</button>

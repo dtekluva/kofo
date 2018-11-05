@@ -9,11 +9,15 @@ months = ["january", "february", "march", "april", "may", "june", "july",
 # address = ["bq", "bq","bq", "bq", "flat", "flat", "flat", "flat", "flat", "flat", "flat", "flat"]
 
 lname = ["Pent", "Harrison", "Afeez", "Adetugbogbo", "Bruno", 
-            "Osokpor", "Justus", "Shogo", "Stella", "Akanbi","Charles", "Adeshina", "Oluyinka", "Inyang",
-            "Seriki", "Olateju", "Onu", "Olufunmilayo", "Vivian", "Jude", "Obinna"]
+            "Osokpor", "Justus", "Shogo", "Stella", "Akanbi",
+            "Charles", "Adeshina", "Oluyinka", "Inyang",
+            "Seriki", "Olateju", "Onu", "Olufunmilayo", 
+            "Vivian", "Jude", "Obinna"]
 
-fname = ["House","user", "Bakare", "user", "user", "user", "user", "user",  "udoh", "Ayorinde",  "user", "user",
-        "Oluyinka", "Orimogunje", "Augustine", "User", "Adeduro", "Uzoamaka", "Omolola", "chima", "user"]
+fname = ["House","user", "Bakare", "user", "user", "user",
+         "user", "user",  "udoh", "Ayorinde",  "user", "user",
+        "Orimogunje", "Augustine", "User", 
+        "Adeduro", "Uzoamaka", "Omolola","Oguche", "chima", "user"]
 
 address = ["PENT HOUSE",
                 "BLK C / FLAT 3",

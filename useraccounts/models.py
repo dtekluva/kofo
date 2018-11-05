@@ -15,6 +15,7 @@ class UserAccount(models.Model):
     address     = models.CharField(max_length=40, null=True, blank = True)
     stays_in    = models.CharField(max_length=40, null=True, default = "flat")
     fee         = models.IntegerField(null=True, blank = True)
+    has_special_fee   = models.BooleanField( blank = True, default = False)
     balance     = models.IntegerField(null = True, blank = True)
     fname       = models.CharField(max_length=40, null=True, default = "New")
     lname       = models.CharField(max_length=40, null=True, default = "User")

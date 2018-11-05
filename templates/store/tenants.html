@@ -47,10 +47,10 @@
                                 <a href="/edit?id={{tenant.id}}"><button class="btn btn-primary btn-sm waves-effect waves-light">View</button></a> 
                               </td>
                           <td>
-                            {{tenant.lname}}  {{tenant.fname}}
+                            {{tenant.lname| upper}}  {{tenant.fname | upper}}
                           </td>
                           <td>
-                              {{tenant.address}}
+                              {{tenant.address | upper}}
                           </td>
                           <td>
                               {{tenant.phone}}

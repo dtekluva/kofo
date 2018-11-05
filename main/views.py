@@ -110,8 +110,16 @@ def post_data(request): #save edit tenant data
         tenant.phone = cleaned_form['phone']
         tenant.address = cleaned_form['address']
         tenant.stays_in = cleaned_form['lives_in']
-        tenant.fee = populate.set_bill(cleaned_form['lives_in'])
 
+        if cleaned_form['fee'].isdigit() and cleaned_form['fee'] is not tenant.fee :
+
+            tenant.fee = int(cleaned_form['fee'])
+            tenant.has_special_fee = True
+            tenant.save()
+        else:
+            tenant.fee = populate.set_bill(cleaned_form['lives_in'])
+            tenant.save()
+            print("lobaaaatan")
         tenant_user.username = cleaned_form['username']
         tenant_user.email = cleaned_form['email']
         tenant_user.is_active = tenant.is_active =  True if cleaned_form['is_active'] == "true" else False
@@ -156,19 +164,6 @@ def create_tenant(request):
 
     return render(request, 'store/add_tenant.html')
 
-
-def run_budget():
-
-    month = Months.objects.get(name = populate.get_month())
-    budget = 0
-    if (0 == 0):
-        Global_Var = Global_var.objects.get(description = "Global_Variables")
-        flats = UserAccount.objects.filter(user__is_active = True, stays_in = "flat").count()
-        b_quarters = UserAccount.objects.filter(user__is_active = True, stays_in = "bq").count()
-        # print(flats, b_quarters)
-        budget = (flats * Global_Var.flat) +  (b_quarters * Global_Var.b_quarters)        
-        month.budget = budget
-        month.save()
 
 @login_required
 def add_income(request):
@@ -240,10 +235,55 @@ def save_expense(request):
     return HttpResponse(json.dumps({"response":"Failed"}))
 
 
+def settings(request):
+    bills = Global_var.objects.get(description = "Global_Variables")
+    response_data = {"bills":bills}
+    return render(request, "store/settings.html", response_data)
 
+def save_settings(request):
 
+    if request.method == "POST":
+        try:
+            bills = Global_var.objects.get(description = "Global_Variables")
+            bills.flat = (request.POST.get("amount"))
+            bills.b_quarters = (request.POST.get("bq_amount"))
+            bills.save()
 
+            rerun_bills(bills.b_quarters, bills.flat)
 
+            return HttpResponse(json.dumps({"response":"success"}))
+
+        except:
+            pass
+
+    return HttpResponse(json.dumps({"response":"Failed"}))
+
+# AUXILLIARY FUNCTIONS TO CARRY OUT NON ROUTING AND HTTP REQUEST TASKS
+
+def run_budget():
+
+    month = Months.objects.get(name = populate.get_month())
+    budget = 0
+    if (0 == 0):
+        Global_Var = Global_var.objects.get(description = "Global_Variables")
+        users = UserAccount.objects.all()
+        for user in users: 
+            budget += user.fee if user.is_active else 0
+            # print(flats, b_quarters)
+            month.budget = budget
+        month.save()
+
+def rerun_bills(bq_bill, flat_bill): # repopulate user bills
+    users = UserAccount.objects.all()
+    for user in users:
+        if user.stays_in == "bq" and not user.has_special_fee : 
+            user.fee =  bq_bill
+            user.save()
+            print(user.has_special_fee)
+        elif user.stays_in == "flat" and not user.has_special_fee: 
+            user.fee = flat_bill
+            user.save()
+            print(user.has_special_fee)
 
 
 

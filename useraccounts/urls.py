@@ -11,15 +11,15 @@ from django.contrib.auth import views as auth_views
 #     url(r'^user/reset-password$', views.resetPasswordView,name='reset-password'),
 # ]
 
-urlpatterns = [ 
-    path('register',  views.register,name='register'), 
-    path('login', views.loginView, name='login'),
-    path('logout', auth_views.logout),
- ]
-
-#  urlpatterns = [
-#     path('register',  views.register,name='register'),
+# urlpatterns = [ 
+#     path('register',  views.register,name='register'), 
 #     path('login', views.loginView, name='login'),
-#     path('logout', auth_views.LogoutView.as_view(template_name="useraccounts/registration.html"), name='logout'),
-#     # path('logout', auth_views.logout),
+#     path('logout', auth_views.logout),
 #  ]
+
+urlpatterns = [
+    path('register',  views.register,name='register'),
+    path('login', views.loginView, name='login'),
+    path('logout', auth_views.LogoutView.as_view(template_name="useraccounts/registration.html"), name='logout'),
+    # path('logout', auth_views.logout),
+ ]

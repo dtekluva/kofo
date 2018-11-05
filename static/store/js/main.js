@@ -111,6 +111,8 @@ var users = [];
 var transactions = [];
 let _all_months = ["january", "february", "march", "april", "may", "june", "july", 
                     "august", "september", "october", "november", "december"]
+
+var possible_transactions = []
 var debtors = 0
 
 var create_table = ()=>{
@@ -157,9 +159,11 @@ promise.done(function(data) {
             const date = (new Date);
             let current_month =  _all_months[date.getUTCMonth()];
             let current_year = date.getFullYear();
-
             date_data = [current_month, current_year];
+          }).then(()=>{
 
+            determine_start_point();
+            
           }).then(()=>{
 
             evaluate_data_for_table(date_data[0], date_data[1]);
@@ -206,8 +210,8 @@ var evaluate_data_for_table = ((current_month, current_year)=>{
   useraccounts.forEach((element) => {
     // console.log(element.fields.fname)
         let new_arr = [];
-        new_arr.push((element.fields.fname).toUpperCase() + "  " + (element.fields.lname).toUpperCase() ) 
-        new_arr.push(element.fields.address) 
+        new_arr.push((element.fields.lname).toUpperCase() + "  " + (element.fields.fname).toUpperCase() ) 
+        new_arr.push((element.fields.address).toUpperCase()) 
         new_arr.push(element.fields.fee) 
         new_arr.push(get_paid(element, current_month, current_year)) //change to amount paid from transactions
         new_arr.push(get_bal(element, current_month, current_year)) //resolve balance write function
@@ -221,7 +225,7 @@ var get_bal = ((user, current_month, current_year)=>{
 
 
   let total_paid = 0
-  let actual_bill = (_all_months.indexOf(current_month)+1) * user.fields.fee
+  let actual_bill = (possible_transactions.length)  * user.fields.fee
 
   transactions.forEach((element)=>{
 
@@ -241,7 +245,8 @@ var get_excess = ((user, current_month, current_year)=>{
                       "august", "september", "october", "november", "december"]
 
   let total_paid = 0
-  let actual_bill = (_all_months.indexOf(current_month)+1) * user.fields.fee
+  // let actual_bill = (_all_months.indexOf(current_month)+1) * user.fields.fee
+  let actual_bill = (possible_transactions.length) * user.fields.fee
 
   transactions.forEach((element)=>{
       // console.log(element)
@@ -264,24 +269,41 @@ var get_paid = ((user, current_month, current_year)=>{
 
   transactions.forEach((element)=>{
     // console.log(current_month)
+    // console.log(user)
       if (element.fields.user == user.fields.user && current_month.toLowerCase() == element.fields.month &&
-        get_year(element.fields.date) == current_year){
+        get_year(element.fields.date) == current_year ){
         // console.log(element.fields.user, element.fields.amount)
           total_paid += element.fields.amount
       }
-      
+      // console.log(total_paid)
   })
-  if (total_paid == 0){
+  if (total_paid < user.fields.fee && user.fields.is_active){
     debtors += 1;
   }
-  return (total_paid) ;
+  return (total_paid);
 });
+
+var determine_start_point = (()=>{
+    transactions.forEach((element)=>{
+      let month = _all_months.indexOf(element.fields.month).toString()
+      let year = (get_year(element.fields.date)).toString()
+      if (!contains(possible_transactions,  (year + month))){
+
+        possible_transactions.push( (get_year(element.fields.date)).toString() + month)
+      }
+    })
+    console.log(possible_transactions)
+});
+
 
 var get_year = ((_date)=>{
   let _year = new Date(_date)
   return _year.getFullYear()
 })
 
+var contains = ((list,val)=>{ //check if already added to a list or thaty list does not contain a value 
+    return list.indexOf(val) >= 0 ?  true : false
+})
 
 
 
