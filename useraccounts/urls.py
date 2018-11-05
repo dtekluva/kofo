@@ -11,8 +11,13 @@ from django.contrib.auth import views as auth_views
 #     url(r'^user/reset-password$', views.resetPasswordView,name='reset-password'),
 # ]
 
+<<<<<<< HEAD
 # urlpatterns = [ 
 #     path('register',  views.register,name='register'), 
+=======
+# urlpatterns = [
+#     path('register',  views.register,name='register'),
+>>>>>>> d0ac8d0471a79e07f1af4863a0d18cc4172e355d
 #     path('login', views.loginView, name='login'),
 #     path('logout', auth_views.logout),
 #  ]
@@ -22,4 +27,8 @@ urlpatterns = [
     path('login', views.loginView, name='login'),
     path('logout', auth_views.LogoutView.as_view(template_name="useraccounts/registration.html"), name='logout'),
     # path('logout', auth_views.logout),
+<<<<<<< HEAD
  ]
+=======
+]
+>>>>>>> d0ac8d0471a79e07f1af4863a0d18cc4172e355d
