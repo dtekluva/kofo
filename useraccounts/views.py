@@ -27,11 +27,7 @@ def loginView(request):
             username = (username.lower())
             password    = request.POST.get("password", "")
             # print(username, password)
-<<<<<<< HEAD
-            user = authenticate(username = (username), password = password)
-=======
             user = authenticate(username = username.lower(), password = password)
->>>>>>> d0ac8d0471a79e07f1af4863a0d18cc4172e355d
             try:
                 user = User.objects.get(username=user)
                 if (user.username == username): #allows user to login using username

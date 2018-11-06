@@ -210,15 +210,9 @@ var evaluate_data_for_table = ((current_month, current_year)=>{
   useraccounts.forEach((element) => {
     // console.log(element.fields.fname)
         let new_arr = [];
-<<<<<<< HEAD
         new_arr.push((element.fields.lname).toUpperCase() + "  " + (element.fields.fname).toUpperCase() ) 
         new_arr.push((element.fields.address).toUpperCase()) 
         new_arr.push(element.fields.fee) 
-=======
-        new_arr.push((element.fields.lname).toUpperCase() + "  " + (element.fields.fname).toUpperCase() )
-        new_arr.push(element.fields.address)
-        new_arr.push(element.fields.fee)
->>>>>>> d0ac8d0471a79e07f1af4863a0d18cc4172e355d
         new_arr.push(get_paid(element, current_month, current_year)) //change to amount paid from transactions
         new_arr.push(get_bal(element, current_month, current_year)) //resolve balance write function
         new_arr.push(get_excess(element, current_month, current_year)) //resolve Excess
@@ -281,11 +275,7 @@ var get_paid = ((user, current_month, current_year)=>{
         // console.log(element.fields.user, element.fields.amount)
           total_paid += element.fields.amount
       }
-<<<<<<< HEAD
       // console.log(total_paid)
-=======
-
->>>>>>> d0ac8d0471a79e07f1af4863a0d18cc4172e355d
   })
   if (total_paid < user.fields.fee && user.fields.is_active){
     debtors += 1;

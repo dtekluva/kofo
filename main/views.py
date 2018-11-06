@@ -100,7 +100,8 @@ def post_data(request): #save edit tenant data
     exempted_fields = ["address", "is_active"]
     tenant_id = request.GET.get("userid")
 
-    if request.method == "POST":
+    if request.method == "POST" and request.user.is_superuser:
+
         cleaned_form = helpers.clean(request.POST, exempted_fields)
 
         tenant = UserAccount.objects.get(id = tenant_id)
@@ -138,7 +139,7 @@ def create_tenant(request):
     cleaned_form = helpers.clean(request.POST, exempted_fields)
 
     # try:
-    if request.method == "POST":
+    if request.method == "POST" and request.user.is_superuser:
         fname = cleaned_form['first_name']
         lname = cleaned_form['last_name']
         username = cleaned_form['username']
@@ -177,7 +178,7 @@ def save_income(request):
 
     tenant = UserAccount.objects.all().order_by("fname")
 
-    if request.method == "POST":
+    if request.method == "POST" and request.user.is_superuser:
 
         cleaned_form = helpers.clean(request.POST)
 
@@ -212,7 +213,7 @@ def add_expense(request):
 def save_expense(request):
     tenant = UserAccount.objects.all().order_by("fname")
     # print(request.POST)
-    if request.method == "POST":
+    if request.method == "POST" and request.user.is_superuser:
         exempted_fields = "description"
         cleaned_form = helpers.clean(request.POST, exempted_fields)
 
@@ -242,7 +243,7 @@ def settings(request):
 
 def save_settings(request):
 
-    if request.method == "POST":
+    if request.method == "POST" and request.user.is_superuser:
         try:
             bills = Global_var.objects.get(description = "Global_Variables")
             bills.flat = (request.POST.get("amount"))
